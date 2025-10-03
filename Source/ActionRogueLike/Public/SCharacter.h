@@ -3,22 +3,30 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Camera/CameraComponent.h"
 #include "GameFramework/Character.h"
+#include "GameFramework/SpringArmComponent.h"
 #include "SCharacter.generated.h"
+
 
 UCLASS()
 class ACTIONROGUELIKE_API ASCharacter : public ACharacter
 {
 	GENERATED_BODY()
-	int a;
 public:
 	// Sets default values for this character's properties
 	ASCharacter();
 
 protected:
+	UPROPERTY(VisibleAnywhere)
+	USpringArmComponent* SpringArmComp;
+	UPROPERTY(VisibleAnywhere)
+	UCameraComponent* CameraComp;
+
+	
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-
+	void MoveForward(float val);
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
