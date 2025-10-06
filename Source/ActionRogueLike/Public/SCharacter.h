@@ -18,8 +18,12 @@ public:
 	ASCharacter();
 
 protected:
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<AActor> ProjectileClass;
+	
 	UPROPERTY(VisibleAnywhere)
 	USpringArmComponent* SpringArmComp;
+	
 	UPROPERTY(VisibleAnywhere)
 	UCameraComponent* CameraComp;
 
@@ -28,6 +32,9 @@ protected:
 	virtual void BeginPlay() override;
 	void MoveForward(float val);
 	void MoveRight(float val);
+	void PrimaryAttack();
+	void Jump();
+	
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

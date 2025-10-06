@@ -22,6 +22,8 @@ ASCharacter::ASCharacter()
 	CameraComp->bUsePawnControlRotation = false; 
 	GetCharacterMovement()->bOrientRotationToMovement = true;
 	bUseControllerRotationYaw = false;
+
+	
 }
 
 // Called when the game starts or when spawned
@@ -66,7 +68,9 @@ void ASCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 	PlayerInputComponent->BindAxis("MoveRight", this, &ASCharacter::MoveRight);
 	PlayerInputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
 	PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
-	
+
+	PlayerInputComponent->BindAction("PrimaryAttack",IE_Pressed,this, &ASCharacter::PrimaryAttack);
+	PlayerInputComponent->BindAction("Jump",IE_Pressed,this, &ASCharacter::Jump);
 }
 
 void ASCharacter::MoveForward(float val)
@@ -87,4 +91,19 @@ void ASCharacter::MoveRight(float val)
 
 	FVector RightVector = FRotationMatrix(rot).GetScaledAxis(EAxis::Y);
 	AddMovementInput(RightVector, val);
+}
+
+void ASCharacter::PrimaryAttack()
+{
+	FVector HandLocation = GetMesh()->GetSocketLocation("Muzzle_01");
+	FTransform SpawnTM = FTransform(GetActorRotation(), HandLocation);
+
+	FActorSpawnParameters SpawnParams;
+	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+	GetWorld()->SpawnActor<AActor>(ProjectileClass, SpawnTM,SpawnParams);
+}
+
+void ASCharacter::Jump()
+{
+	bPressedJump = true;
 }
