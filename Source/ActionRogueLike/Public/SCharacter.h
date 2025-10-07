@@ -8,6 +8,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "SCharacter.generated.h"
 
+class USInteractionComponent;
 
 UCLASS()
 class ACTIONROGUELIKE_API ASCharacter : public ACharacter
@@ -27,13 +28,15 @@ protected:
 	UPROPERTY(VisibleAnywhere)
 	UCameraComponent* CameraComp;
 
-	
+	UPROPERTY(VisibleAnywhere)
+	USInteractionComponent* InteractionComp;
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 	void MoveForward(float val);
 	void MoveRight(float val);
 	void PrimaryAttack();
 	void Jump();
+	void PrimaryInteract();
 	
 public:	
 	// Called every frame

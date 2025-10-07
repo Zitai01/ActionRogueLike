@@ -3,6 +3,7 @@
 
 #include "SCharacter.h"
 #include "DrawDebugHelpers.h"
+#include "SInteractionComponent.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
@@ -19,7 +20,10 @@ ASCharacter::ASCharacter()
 	
 	CameraComp = CreateDefaultSubobject<UCameraComponent>("CameraComponent");
 	CameraComp->SetupAttachment(SpringArmComp);
-	CameraComp->bUsePawnControlRotation = false; 
+	CameraComp->bUsePawnControlRotation = false;
+
+	InteractionComp = CreateDefaultSubobject<USInteractionComponent>("InteractionComponent");
+	
 	GetCharacterMovement()->bOrientRotationToMovement = true;
 	bUseControllerRotationYaw = false;
 
@@ -71,6 +75,7 @@ void ASCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 
 	PlayerInputComponent->BindAction("PrimaryAttack",IE_Pressed,this, &ASCharacter::PrimaryAttack);
 	PlayerInputComponent->BindAction("Jump",IE_Pressed,this, &ASCharacter::Jump);
+	PlayerInputComponent->BindAction("PrimaryInteract",IE_Pressed,this, &ASCharacter::PrimaryInteract);
 }
 
 void ASCharacter::MoveForward(float val)
@@ -106,4 +111,13 @@ void ASCharacter::PrimaryAttack()
 void ASCharacter::Jump()
 {
 	bPressedJump = true;
+}
+
+void ASCharacter::PrimaryInteract()
+{
+	if (InteractionComp)
+	{
+		InteractionComp->PrimaryInteract();
+	}
+
 }
