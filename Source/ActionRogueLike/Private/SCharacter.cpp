@@ -3,6 +3,7 @@
 
 #include "SCharacter.h"
 #include "DrawDebugHelpers.h"
+#include "SAttributeComponent.h"
 #include "SInteractionComponent.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -23,6 +24,8 @@ ASCharacter::ASCharacter()
 	CameraComp->bUsePawnControlRotation = false;
 
 	InteractionComp = CreateDefaultSubobject<USInteractionComponent>("InteractionComponent");
+
+	AttributeComp = CreateDefaultSubobject<USAttributeComponent>("AttributeComponent");
 	
 	GetCharacterMovement()->bOrientRotationToMovement = true;
 	bUseControllerRotationYaw = false;

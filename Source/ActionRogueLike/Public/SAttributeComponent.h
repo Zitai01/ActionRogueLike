@@ -20,9 +20,12 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
-public:	
-	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly, Category="Attributes")
+	float Health;
+	
+public:
 
+	UFUNCTION(BlueprintCallable, Category="Attributes")
+	bool ApplyHealthChange(float Delta);
 		
 };

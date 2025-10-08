@@ -8,6 +8,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "SCharacter.generated.h"
 
+class USAttributeComponent;
 class USInteractionComponent;
 class UAnimMontage;
 UCLASS()
@@ -34,7 +35,12 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "Attack")
 	UAnimMontage* AttackAnim;
 
+	UPROPERTY(VisibleAnywhere,BlueprintReadOnly, Category = "Components")
+	USAttributeComponent* AttributeComp;
 
+
+
+	
 	FTimerHandle TimerHandle_PrimaryAttack;
 
 	
