@@ -6,6 +6,8 @@
 #include "GameFramework/Actor.h"
 #include "SExplosiveBarrel.generated.h"
 
+class URadialForceComponent;
+
 UCLASS()
 class ACTIONROGUELIKE_API ASExplosiveBarrel : public AActor
 {
@@ -14,8 +16,19 @@ class ACTIONROGUELIKE_API ASExplosiveBarrel : public AActor
 public:	
 	// Sets default values for this actor's properties
 	ASExplosiveBarrel();
-
+	
+	UFUNCTION()
+	void OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor,
+		   UPrimitiveComponent* OtherComp, FVector NormalImpulse,
+		   const FHitResult& Hit);
+	void Explode();
 protected:
+
+	UPROPERTY(VisibleAnywhere,BlueprintReadWrite)
+	UStaticMeshComponent* BaseMesh;
+
+	UPROPERTY(VisibleAnywhere,BlueprintReadWrite)
+	URadialForceComponent* ForceComp;
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 

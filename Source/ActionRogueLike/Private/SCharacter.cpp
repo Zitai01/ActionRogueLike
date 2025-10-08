@@ -17,7 +17,7 @@ ASCharacter::ASCharacter()
 	SpringArmComp = CreateDefaultSubobject<USpringArmComponent>("SpringArmComponent");
 	SpringArmComp->bUsePawnControlRotation = true;
 	SpringArmComp->SetupAttachment(GetRootComponent());
-	
+	GetMesh()->SetSimulatePhysics(true);
 	CameraComp = CreateDefaultSubobject<UCameraComponent>("CameraComponent");
 	CameraComp->SetupAttachment(SpringArmComp);
 	CameraComp->bUsePawnControlRotation = false;
@@ -76,6 +76,7 @@ void ASCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 	PlayerInputComponent->BindAction("PrimaryAttack",IE_Pressed,this, &ASCharacter::PrimaryAttack);
 	PlayerInputComponent->BindAction("Jump",IE_Pressed,this, &ASCharacter::Jump);
 	PlayerInputComponent->BindAction("PrimaryInteract",IE_Pressed,this, &ASCharacter::PrimaryInteract);
+	
 }
 
 void ASCharacter::MoveForward(float val)
@@ -100,12 +101,24 @@ void ASCharacter::MoveRight(float val)
 
 void ASCharacter::PrimaryAttack()
 {
+	PlayAnimMontage(AttackAnim);
+
+	GetWorldTimerManager().SetTimer(TimerHandle_PrimaryAttack, this, &ASCharacter::PrimaryAttack_TimeElapsed, 0.2f);
+
+}
+
+void ASCharacter::PrimaryAttack_TimeElapsed()
+{
 	FVector HandLocation = GetMesh()->GetSocketLocation("Muzzle_01");
 	FTransform SpawnTM = FTransform(GetActorRotation(), HandLocation);
 
 	FActorSpawnParameters SpawnParams;
 	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+	SpawnParams.Instigator = this; 
+
+	
 	GetWorld()->SpawnActor<AActor>(ProjectileClass, SpawnTM,SpawnParams);
+	
 }
 
 void ASCharacter::Jump()
@@ -121,3 +134,4 @@ void ASCharacter::PrimaryInteract()
 	}
 
 }
+

@@ -15,7 +15,7 @@ class ACTIONROGUELIKE_API ASItemChest : public AActor, public ISGameplayInterfac
 	void Interact_Implementation(APawn* InstigatorPawn);
 protected:
 
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(VisibleAnywhere,BlueprintReadOnly)
 	UStaticMeshComponent* LidMesh;
 	
 	UPROPERTY(VisibleAnywhere)

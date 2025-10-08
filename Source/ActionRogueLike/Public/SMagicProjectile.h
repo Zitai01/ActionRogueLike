@@ -20,13 +20,13 @@ public:
 	ASMagicProjectile();
 
 protected:
-	UPROPERTY(visibleAnywhere)
+	UPROPERTY(visibleAnywhere, BlueprintReadOnly)
 	USphereComponent* SphereComp;
 	
-	UPROPERTY(visibleAnywhere)
+	UPROPERTY(visibleAnywhere,BlueprintReadOnly)
 	UProjectileMovementComponent* MovementComp;
 	
-	UPROPERTY(visibleAnywhere)
+	UPROPERTY(visibleAnywhere,BlueprintReadOnly)
 	UNiagaraComponent* NiagaraComp;
 
 

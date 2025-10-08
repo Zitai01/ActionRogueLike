@@ -9,7 +9,7 @@
 #include "SCharacter.generated.h"
 
 class USInteractionComponent;
-
+class UAnimMontage;
 UCLASS()
 class ACTIONROGUELIKE_API ASCharacter : public ACharacter
 {
@@ -19,7 +19,7 @@ public:
 	ASCharacter();
 
 protected:
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category = "Attack")
 	TSubclassOf<AActor> ProjectileClass;
 	
 	UPROPERTY(VisibleAnywhere)
@@ -30,6 +30,14 @@ protected:
 
 	UPROPERTY(VisibleAnywhere)
 	USInteractionComponent* InteractionComp;
+
+	UPROPERTY(EditAnywhere, Category = "Attack")
+	UAnimMontage* AttackAnim;
+
+
+	FTimerHandle TimerHandle_PrimaryAttack;
+
+	
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 	void MoveForward(float val);
@@ -37,6 +45,7 @@ protected:
 	void PrimaryAttack();
 	void Jump();
 	void PrimaryInteract();
+	void PrimaryAttack_TimeElapsed();
 	
 public:	
 	// Called every frame
